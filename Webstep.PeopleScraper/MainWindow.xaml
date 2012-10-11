@@ -7,7 +7,11 @@
             <RowDefinition Height="60" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Command="{Binding LoadPeopleCommand}" Content="Load people" Height="50" Width="200" />
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding LoadPeopleCommand}" Content="Load people" Height="50" Width="200" Margin="5" />
+            <Button Command="{Binding SaveToFileCommand}" Content="Save to file" Height="50" Width="200" Margin="5" />
+        </StackPanel>
+        
         <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Person.Name}" />

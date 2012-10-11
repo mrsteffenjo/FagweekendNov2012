@@ -51,7 +51,7 @@ namespace Webstep.PeopleScraper
 
             // Get info entry
             var result = doc.DocumentNode.Descendants("div").First(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("entry"));
-            var info = result.InnerText.Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("Last ned vCard", "");
+            var info = result.InnerText.Replace("\t", String.Empty).Replace("\r", String.Empty).Replace("Last ned vCard", "");
             person.Info = info;
             Messenger.Default.Send(new PersonInfoRetrievedEvent()
                 {
