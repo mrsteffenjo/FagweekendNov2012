@@ -11,6 +11,7 @@ namespace Webstep.PeopleScraper
 {
     public class PersonService
     {
+        private static int idGenerator;
         public PersonService()
         {
             Persons = new List<Person>();
@@ -25,9 +26,15 @@ namespace Webstep.PeopleScraper
 
         }
 
+        public static int GetId()
+        {
+            idGenerator += 1;
+            return idGenerator;
+        }
+
         public List<Person> Persons { get; set; }
 
-        public Person Get(Guid id)
+        public Person Get(int id)
         {
             return Persons.First(p => p.Id == id);
         }

@@ -4,7 +4,7 @@ namespace Webstep.People.Domain
 {
     public class Person
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         private string _name;
         public string Name
         {

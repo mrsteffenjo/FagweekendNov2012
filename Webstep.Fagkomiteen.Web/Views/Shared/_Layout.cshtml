@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Fagkomiteen - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="http://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrapper">
+        <div id="wrapper2">
+            <div id="header" class="container">
+                <div id="logo">
+                    <h1><a href="#">Fagkomiteen </a></h1>
+                    <p>Webstep Stavangers lekegrind</p>
+                </div>
+                <div id="websteplogo"></div>
+                <div id="menu">
+                    <ul>
+                        <li class="current_page_item"><li>@Html.ActionLink("Hjem","Index")</li></li>
+                        <li>@Html.ActionLink("Fagkveld","TechEvening")</li>
+                        <li>@Html.ActionLink("Faghelg","TechWeekend")</li>
+                        <li>@Html.ActionLink("Lekegrind","PlayGround")</li>
+                        <li>@Html.ActionLink("Kontakt","Contact")</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end #header -->
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+
+            <!-- end #page -->
+        </div>
+    </div>
+    <div id="footer-content-wrapper">
+        <div id="footer-content">
+            <div id="column1">
+                <h2>Engasjement</h2>
+                <!--<ul>
+				<li><a href="#">Aliquam libero</a></li>
+				<li><a href="#">Consectetuer adipiscing elit</a></li>
+				<li><a href="#">Metus aliquam pellentesque</a></li>
+				<li><a href="#">Suspendisse iaculis mauris</a></li>
+				<li><a href="#">Urnanet non molestie semper</a></li>
+				<li><a href="#">Proin gravida orci porttitor</a></li>
+			</ul>-->
+            </div>
+            <div id="column2">
+                <h2>Sosialt</h2>
+                <!--<ul>
+				<li><a href="#">Aliquam libero</a></li>
+				<li><a href="#">Consectetuer adipiscing elit</a></li>
+				<li><a href="#">Metus aliquam pellentesque</a></li>
+				<li><a href="#">Suspendisse iaculis mauris</a></li>
+				<li><a href="#">Urnanet non molestie semper</a></li>
+				<li><a href="#">Proin gravida orci porttitor</a></li>
+			</ul>-->
+            </div>
+            <div id="column3">
+                <h2>Teknologi</h2>
+                <!--<ul>
+				<li><a href="#">Aliquam libero</a></li>
+				<li><a href="#">Consectetuer adipiscing elit</a></li>
+				<li><a href="#">Metus aliquam pellentesque</a></li>
+				<li><a href="#">Suspendisse iaculis mauris</a></li>
+				<li><a href="#">Urnanet non molestie semper</a></li>
+				<li><a href="#">Proin gravida orci porttitor</a></li>
+			</ul>-->
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p>Copyright (c) 2012 fagkomiteen.no. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>.</p>
+    </div>
+    <!-- end #footer -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

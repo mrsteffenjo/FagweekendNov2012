@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 using Webstep.People.Domain;
+using Webstep.PeopleScraper;
 
 namespace Webstep.People.Client.Model
 {
@@ -10,7 +11,7 @@ namespace Webstep.People.Client.Model
     {
         private static Person Parse(HtmlNode personNode)
         {
-            var person = new Person { Id = Guid.NewGuid() };
+            var person = new Person { Id = PersonService.GetId() };
             
             person.ImageUrl = personNode.Descendants("img").Select(x => x.GetAttributeValue("src", "")).First();
             var title = personNode.Descendants("em").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "title").
