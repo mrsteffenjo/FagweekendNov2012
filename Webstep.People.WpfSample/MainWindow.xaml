@@ -1,0 +1,28 @@
+﻿<Window x:Class="Webstep.People.WpfSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Fagkomiteen.no - Webstep folk" Height="600" Width="800">
+    <Grid>
+<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding LoadPeopleCommand}" Content="Get people" Height="50" Width="200" Margin="5" />
+                <!--<Button Command="{Binding SaveToFileCommand}" Content="Save to file" Height="50" Width="200" Margin="5" />-->
+            </StackPanel>
+
+            <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="ImageUrl" Binding="{Binding ImageUrl}" />
+                    <DataGridTextColumn Header="Info" Binding="{Binding Info}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
