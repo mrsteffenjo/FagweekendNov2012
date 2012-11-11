@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Fagkomiteen.no - Webstep folk" Height="600" Width="800">
     <Grid>
-<Grid>
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition />
@@ -15,6 +15,15 @@
 
             <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Bilde" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImageUrl}"></Image>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Id}" />
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
                     <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
