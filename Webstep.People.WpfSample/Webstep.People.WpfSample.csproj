@@ -72,7 +72,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Events\CommunicationFailedEvent.cs" />
+    <Compile Include="Model\Events\PersonDeletedEvent.cs" />
     <Compile Include="Model\Events\PeopleRetrievedEvent.cs" />
+    <Compile Include="Model\Events\PersonCreatedEvent.cs" />
     <Compile Include="Model\PersonService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">

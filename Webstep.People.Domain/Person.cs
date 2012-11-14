@@ -27,6 +27,7 @@ namespace Webstep.People.Domain
 
         public void NameSplit(string name)
         {
+            if (string.IsNullOrEmpty(name)) return;
             if (name.Length > 0)
             {
                 // Check for a comma

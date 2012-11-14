@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Webstep.People.WebClient.Models;
 
 namespace Webstep.Fagkomiteen.Web.Controllers
 {
@@ -29,6 +30,12 @@ namespace Webstep.Fagkomiteen.Web.Controllers
         {
         
             return View();
+        }
+
+        public string Recreate()
+        {
+            new WebstepContext().Recreate();
+            return "Recreated";
         }
 
         public ActionResult Contact()

@@ -17,11 +17,50 @@ namespace Webstep.People.WpfSample.Model
     {
         string peopleUrl = "http://www.fagkomiteen.no/api/person";
 
-        public void GetPeopleRest()
+        public void AddPerson(Person person)
+        {
+            var client = new RestClient(peopleUrl);
+            var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json };
+            request.AddBody(person);
+            client.ExecuteAsync<Person>(request, response =>
+            {
+                App.Current.Dispatcher.BeginInvoke(response.StatusCode == HttpStatusCode.OK
+                                                       ? new Action(
+                                                             () =>
+                                                             Messenger.Default.Send(new PersonCreatedEvent
+                                                                 {Person = response.Data}))
+                                                       : new Action(
+                                                             () =>
+                                                             Messenger.Default.Send(new CommunicationFailedEvent()
+                                                                 {Message = "Failed to add person"})));
+            });
+        }
+
+        public void Delete(Person person)
+        {
+            var client = new RestClient(peopleUrl);
+            var request = new RestRequest(Method.DELETE) { RequestFormat = DataFormat.Json };
+            request.AddParameter("Id", person.Id);
+            client.ExecuteAsync<Person>(request, response =>
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new PersonDeletedEvent { Person = response.Data })));
+                }
+                else
+                {
+
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to delete person" })));
+
+                }
+
+            });
+        }
+
+        public void GetPeople()
         {
              var client = new RestClient(peopleUrl);
             var request = new RestRequest(Method.GET) {RequestFormat = DataFormat.Json};
-            //request.AddBody(score);
             client.ExecuteAsync<List<Person>>(request, response =>
             {
                 if (response.StatusCode == HttpStatusCode.OK)
@@ -32,11 +71,13 @@ namespace Webstep.People.WpfSample.Model
                 else
                 {
                     
-                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to loat persons"})));
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to load persons"})));
                     
                 }
                 
             });
         }
+
+
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -17,14 +18,30 @@ namespace Webstep.People.WpfSample.ViewModels
 {
     public class MainViewModel: ViewModelBase
     {
-        PersonService _personService = new PersonService();
+        readonly PersonService _personService = new PersonService();
 
         public MainViewModel()
         {
-            LoadPeopleCommand = new RelayCommand(() => _personService.GetPeopleRest());
+            AddPersonCommand = new RelayCommand(AddPerson);
+            LoadPeopleCommand = new RelayCommand(() =>
+                {
+                    People.Clear();
+                    _personService.GetPeople();
+                });
+            DeletePersonCommand = new RelayCommand<Person>(DeletePerson);
+
+            Messenger.Default.Register<CommunicationFailedEvent>(this, (e) => MessageBox.Show(e.Message));
+            Messenger.Default.Register<PersonCreatedEvent>(this, (e) => _people.Add(e.Person));
+            Messenger.Default.Register<PersonDeletedEvent>(this, (e) =>
+                {
+                    if (People.Any(p => p.Id == e.Person.Id))
+                    {
+                        var person = People.First(p => p.Id == e.Person.Id);
+                        _people.Remove(person);
+                    }
+                });
             Messenger.Default.Register<PeopleRetrievedEvent>(this, (e) =>
             {
-
                 foreach (var person in e.People)
                 {
                     People.Add(person);
@@ -32,7 +49,25 @@ namespace Webstep.People.WpfSample.ViewModels
             });
         }
 
+        private void DeletePerson(Person person)
+        {
+            _personService.Delete(person);
+        }
+
+        private void AddPerson()
+        {
+            var person = new Person
+                {
+                    FirstName = "Hans",
+                    LastName = "Eriksen",
+                    Email = "hans.eriksen@webstep.no"
+                };
+            _personService.AddPerson(person);
+        }
+
         public ICommand LoadPeopleCommand { get; set; }
+        public ICommand AddPersonCommand { get; set; }
+        public RelayCommand<Person> DeletePersonCommand { get; set; }
 
         private ObservableCollection<Person> _people = new ObservableCollection<Person>();
         public ObservableCollection<Person> People
