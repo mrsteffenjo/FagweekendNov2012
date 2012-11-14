@@ -13,7 +13,7 @@
                 <Button Command="{Binding AddPersonCommand}" Content="Add new person" Height="50" Width="200" Margin="5" />
             </StackPanel>
 
-            <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Delete" Width="80">
                         <DataGridTemplateColumn.CellTemplate>

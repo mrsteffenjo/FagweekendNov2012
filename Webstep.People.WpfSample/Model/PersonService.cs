@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
-using Newtonsoft.Json;
 using RestSharp;
 using Webstep.People.Domain;
 using Webstep.People.WpfSample.Model.Events;
@@ -15,33 +10,36 @@ namespace Webstep.People.WpfSample.Model
 {
     public class PersonService
     {
-        string peopleUrl = "http://www.fagkomiteen.no/api/person";
+        private const string PeopleUrl = "http://www.fagkomiteen.no/api/person";
+        private readonly RestClient _client;
+
+        public PersonService()
+        {
+             _client = new RestClient(PeopleUrl);
+        }
 
         public void AddPerson(Person person)
         {
-            var client = new RestClient(peopleUrl);
             var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json };
             request.AddBody(person);
-            client.ExecuteAsync<Person>(request, response =>
+            _client.ExecuteAsync<Person>(request, response =>
             {
-                App.Current.Dispatcher.BeginInvoke(response.StatusCode == HttpStatusCode.OK
-                                                       ? new Action(
-                                                             () =>
-                                                             Messenger.Default.Send(new PersonCreatedEvent
-                                                                 {Person = response.Data}))
-                                                       : new Action(
-                                                             () =>
-                                                             Messenger.Default.Send(new CommunicationFailedEvent()
-                                                                 {Message = "Failed to add person"})));
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new PersonCreatedEvent{Person = response.Data})));    
+                }
+                else
+                {
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to Add person" })));
+                }
             });
         }
 
         public void Delete(Person person)
         {
-            var client = new RestClient(peopleUrl);
             var request = new RestRequest(Method.DELETE) { RequestFormat = DataFormat.Json };
             request.AddParameter("Id", person.Id);
-            client.ExecuteAsync<Person>(request, response =>
+            _client.ExecuteAsync<Person>(request, response =>
             {
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -49,32 +47,24 @@ namespace Webstep.People.WpfSample.Model
                 }
                 else
                 {
-
                     App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to delete person" })));
-
                 }
-
             });
         }
 
         public void GetPeople()
         {
-             var client = new RestClient(peopleUrl);
             var request = new RestRequest(Method.GET) {RequestFormat = DataFormat.Json};
-            client.ExecuteAsync<List<Person>>(request, response =>
+            _client.ExecuteAsync<List<Person>>(request, response =>
             {
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    //var ranking = JsonConvert.DeserializeObject<ScoreRanking>(response.Content);
                     App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new PeopleRetrievedEvent { People = response.Data })));
                 }
                 else
                 {
-                    
-                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to load persons"})));
-                    
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to load persons"})));   
                 }
-                
             });
         }
 
