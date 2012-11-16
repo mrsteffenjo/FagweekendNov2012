@@ -4,6 +4,20 @@ namespace Webstep.People.Domain
 {
     public class Person
     {
+        public static Person Create()
+        {
+            var person = new Person
+                {
+                    FirstName = "Senior",
+                    LastName = "Konsulent",
+                    Email = "seniorkonsulent@webstep.no",
+                    Title = "Seniorkonsulent",
+                    ImageUrl = "http://www.webstep.no/wp-content/uploads/2010/02/Ikon_bildeerstatt8-110x150.png"
+                };
+            return person;
+
+        }
+
         public int Id { get; set; }
         private string _name;
         public string Name

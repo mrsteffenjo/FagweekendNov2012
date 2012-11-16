@@ -11,10 +11,16 @@
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding LoadPeopleCommand}" Content="Get people" Height="50" Width="200" Margin="5" />
                 <Button Command="{Binding AddPersonCommand}" Content="Add new person" Height="50" Width="200" Margin="5" />
+                <Button Command="{Binding UpdatePersonCommand}" CommandParameter="{Binding SelectedPerson}" Content="Update" Height="50" Width="200" Margin="5" />
             </StackPanel>
 
+<<<<<<< HEAD
             <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
                 <DataGrid.Columns>
+=======
+            <DataGrid x:Name="PersonGrid" Grid.Row="1" ItemsSource="{Binding People}" SelectedValue="{Binding SelectedPerson}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                <DataGrid.Columns> 
+>>>>>>> A lot of stuff
                     <DataGridTemplateColumn Header="Delete" Width="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -30,8 +36,9 @@
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="LastName" Binding="{Binding LastName}" />
                     <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
                     <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" />

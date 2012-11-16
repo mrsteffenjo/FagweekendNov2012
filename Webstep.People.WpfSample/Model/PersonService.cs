@@ -11,7 +11,11 @@ namespace Webstep.People.WpfSample.Model
     public class PersonService
     {
         private const string PeopleUrl = "http://www.fagkomiteen.no/api/person";
+<<<<<<< HEAD
         private readonly RestClient _client;
+=======
+        private  RestClient _client;
+>>>>>>> A lot of stuff
 
         public PersonService()
         {
@@ -32,6 +36,28 @@ namespace Webstep.People.WpfSample.Model
                 {
                     App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent() { Message = "Failed to Add person" })));
                 }
+<<<<<<< HEAD
+=======
+            });
+        }
+
+        public void UpdatePerson(Person person)
+        {
+            var request = new RestRequest(Method.PUT) { RequestFormat = DataFormat.Json };
+            request.AddBody(person);
+            var url = PeopleUrl + "/" + person.Id;
+            _client = new RestClient(url);
+            _client.ExecuteAsync<Person>(request, response =>
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new PersonUpdatedEvent { Person = response.Data })));
+                }
+                else
+                {
+                    App.Current.Dispatcher.BeginInvoke(new Action(() => Messenger.Default.Send(new CommunicationFailedEvent { Message = "Failed to update person" })));
+                }
+>>>>>>> A lot of stuff
             });
         }
 

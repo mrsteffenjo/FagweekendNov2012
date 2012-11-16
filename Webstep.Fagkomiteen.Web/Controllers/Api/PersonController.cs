@@ -15,9 +15,10 @@ namespace Webstep.Fagkomiteen.Web.Controllers.Api
         private WebstepContext db = new WebstepContext();
 
         // GET api/Person
+        [Queryable]
         public IQueryable<Person> GetPeople()
         {
-            return db.Persons.AsQueryable();
+            return db.Persons;
         }
 
         // GET api/Person/5
