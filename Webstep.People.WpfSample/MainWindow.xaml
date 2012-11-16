@@ -14,13 +14,8 @@
                 <Button Command="{Binding UpdatePersonCommand}" CommandParameter="{Binding SelectedPerson}" Content="Update" Height="50" Width="200" Margin="5" />
             </StackPanel>
 
-<<<<<<< HEAD
-            <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
-                <DataGrid.Columns>
-=======
             <DataGrid x:Name="PersonGrid" Grid.Row="1" ItemsSource="{Binding People}" SelectedValue="{Binding SelectedPerson}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
                 <DataGrid.Columns> 
->>>>>>> A lot of stuff
                     <DataGridTemplateColumn Header="Delete" Width="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
