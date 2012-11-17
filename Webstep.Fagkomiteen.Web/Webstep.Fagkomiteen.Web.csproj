@@ -157,7 +157,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\JsonpMediaTypeFormatter.cs" />
     <Compile Include="Models\WebstepContext.cs" />
+    <Compile Include="Models\XHttpMethodOverrideDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

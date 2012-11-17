@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <title></title>
+</head>
+<body>
+    <h1>Web Sample</h1>
+
+    <script type="text/javascript">
+        $(function () {
+            alert('loaded');
+            //$.getJSON("http://fagkomiteen.no/api/person", function (allData) {
+            //    alert(allData);
+            //});
+
+            //$.getJSON("http://localhost:50422/api/person", function(allData) {
+            //    alert(allData);
+            //});
+
+            $.ajax({
+                url: "http://localhost:50422/api/person",
+                dataType: "jsonp"
+            })
+     .done(function (data) {
+         alert(data);
+     })
+     .fail(function (e) {
+         alert("fail");
+     })
+     .always(function () { });
+
+        });
+
+        $.ajax({
+            url: "http://localhost:50422/api/person",
+            type: "POST",
+            // Firefox reuires the dataType otherwise the "data" argument of the done callback
+            // is just a string and not a JSON 
+            dataType: 'json',
+            accept: "application/json",
+            data: { FirstName: "Web", LastName: "Guru" }
+        })
+            .done(function (data) {
+                alert(data);
+            })
+            .fail(function (e) {
+                alert(e.statusText);
+            });
+    </script>
+</body>
+</html>

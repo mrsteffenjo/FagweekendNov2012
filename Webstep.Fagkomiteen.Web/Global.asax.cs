@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Newtonsoft.Json.Serialization;
+using Webstep.Fagkomiteen.Web.Models;
 using Webstep.People.WebClient.Models;
 
 namespace Webstep.Fagkomiteen.Web
@@ -29,6 +30,10 @@ namespace Webstep.Fagkomiteen.Web
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            GlobalConfiguration.Configuration.Formatters.Insert(0, new JsonpMediaTypeFormatter()); 
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new XHttpMethodOverrideDelegatingHandler());            
+        
         }
     }
 }
