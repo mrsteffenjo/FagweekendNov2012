@@ -5,48 +5,142 @@
     <title></title>
 </head>
 <body>
-    <h1>Web Sample</h1>
+    <h1>Webstep people</h1>
+    <div style="width: 400px; float: left;">
+        <form id="memberForm" class="dataEntryForm" method="post">
+            <fieldset>
+                <legend>Ansatt</legend>
+                <ul>
+                     <li>
+                        <label for="id" title="First Name">Id</label>
+                        <input type="text" id="Id" name="Id" />
+                    </li>
+                    <li>
+                        <label for="firstName" title="First Name">First Name</label>
+                        <input type="text" id="FirstName" name="FirstName" value="John" />
+                    </li>
+                    <li>
+                        <label for="lastName" title="Last Name">Last Name</label>
+                        <input type="text" id="LastName" name="LastName" value="Ely" />
+                    </li>
+                    <li>
+                        <label for="title" title="Title">Username</label>
+                        <input type="text" id="Title" name="Title" value="jely" />
+                    </li>
+                    <li>
+                        <label for="email" title="Email Address">Email</label>
+                        <input type="text" id="Email" name="Email" value="shivy@gmail.com" />
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
+
+        <button onclick="postMember()">Opprett (POST)</button>
+        <button onclick="putMember()">Oppdater (PUT)</button>
+        <button onclick="deleteMember()">Slett (DELETE)</button>
+    </div>
+    <div id="membersDiv" style="float: left"></div>
 
     <script type="text/javascript">
+        var baseAddress = "http://localhost:50422/api/person/";
+        
         $(function () {
-            alert('loaded');
-            //$.getJSON("http://fagkomiteen.no/api/person", function (allData) {
-            //    alert(allData);
-            //});
-
-            //$.getJSON("http://localhost:50422/api/person", function(allData) {
-            //    alert(allData);
-            //});
-
-            $.ajax({
-                url: "http://localhost:50422/api/person",
-                dataType: "jsonp"
-            })
-     .done(function (data) {
-         alert(data);
-     })
-     .fail(function (e) {
-         alert("fail");
-     })
-     .always(function () { });
-
+            jQuery.support.cors = true;
+            getPeople($("#membersDiv"));
         });
 
-        $.ajax({
-            url: "http://localhost:50422/api/person",
-            type: "POST",
-            // Firefox reuires the dataType otherwise the "data" argument of the done callback
-            // is just a string and not a JSON 
-            dataType: 'json',
-            accept: "application/json",
-            data: { FirstName: "Web", LastName: "Guru" }
-        })
-            .done(function (data) {
-                alert(data);
+
+        function getPeople(elem) {
+            $.ajax({
+                url: baseAddress,
+                dataType: "jsonp"
             })
-            .fail(function (e) {
-                alert(e.statusText);
+                .done(function (data) {
+                    elem.empty();
+                    var ulElementId = "membersList";
+                    var items = [];
+                    $.each(data, function (index, value) {
+                        items.push('<li data-member=\'' + JSON.stringify(value) + '\'>' + value.FirstName + ' ' + value.LastName + '</i>');
+                    });
+                    $("<ul />", {
+                        "id": ulElementId,
+                        "class": "members-list",
+                        html: items.join('')
+                    }).appendTo(elem);
+
+                    $("#" + ulElementId).click(function (e) {
+                        var member = $(e.srcElement).data("member");
+                        assignFormFieldValues("memberForm", member);
+                    });
+
+                })
+                .fail(function (e) {
+                    alert("fail");
+                });
+        };
+
+        function assignFormFieldValues(formId, obj) {
+            var fields = $("#" + formId).serializeArray();
+            $.each(fields, function (index, field) {
+                var f = $("[name=" + field.name + "]").val(obj[field.name]);
             });
+        }
+
+
+        function postMember() {
+            var postData = $("#memberForm").serialize();
+            postData = postData.replace("Id=&", "");
+            $.ajax({
+                url: baseAddress,
+                type: "POST",
+                // Firefox reuires the dataType otherwise the "data" argument of the done callback
+                // is just a string and not a JSON 
+                dataType: 'json',
+                accept: "application/json",
+                //data: $("#memberForm").serialize(),
+                data: postData
+            })
+                .done(function (data) {
+                    //$("#membersList").append('<li data-member=\'' + JSON.stringify(data) + '\'>' + data.firstName + ' ' + data.lastName + '</i>');
+                    getPeople($("#membersDiv"));
+                })
+                .fail(function (e) {
+                    alert(e.statusText);
+                })
+                .always(function () { });
+        }
+
+        function putMember() {
+            $.ajax({
+                url: baseAddress + $("#Id").val(),
+                type: "POST",
+                data: $("#memberForm").serialize(),
+                headers: { "X-HTTP-Method-Override": "PUT" }
+            })
+                .done(function (data) {
+                    getPeople($("#membersDiv"));
+                })
+                .fail(function (e) {
+                    alert(e.statusText);
+                })
+                .always(function () { });
+        }
+
+        function deleteMember() {
+            $.ajax({
+                url: baseAddress + $("#Id").val(),
+                type: "POST",
+                data: $("#memberForm").serialize(),
+                headers: { "X-HTTP-Method-Override": "DELETE" }
+            })
+                .done(function (data) {
+                    getPeople($("#membersDiv"));
+                })
+                .fail(function (e) {
+                    alert(e.statusText);
+                })
+                .always(function () { });
+        }
     </script>
 </body>
 </html>
