@@ -14,7 +14,8 @@
         
         <DataGrid Grid.Row="1" ItemsSource="{Binding People}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Person.Name}" />
+                <DataGridTextColumn Header="FirstName" Binding="{Binding Person.FirstName}" />
+                <DataGridTextColumn Header="LastName" Binding="{Binding Person.LastName}" />
                 <DataGridTextColumn Header="Title" Binding="{Binding Person.Title}" />
                 <DataGridTextColumn Header="Phone" Binding="{Binding Person.Phone}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Person.Email}" />
