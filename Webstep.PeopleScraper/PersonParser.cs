@@ -20,7 +20,7 @@ namespace Webstep.People.Client.Model
                 
 
             var name = personNode.Descendants("a").First();
-            person.Name = name.InnerText;
+            person.SplitName(name.InnerText);
             person.InfoUrl = name.GetAttributeValue("href", "");
 
             var email = personNode.Descendants("a").First(x => x.Attributes["href"].Value.Contains("mailto"));

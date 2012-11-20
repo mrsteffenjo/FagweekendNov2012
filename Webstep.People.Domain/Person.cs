@@ -19,17 +19,6 @@ namespace Webstep.People.Domain
         }
 
         public int Id { get; set; }
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                NameSplit(_name);
-            }
-        }
-        
         public string Title { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -39,7 +28,7 @@ namespace Webstep.People.Domain
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public void NameSplit(string name)
+        public void SplitName(string name)
         {
             if (string.IsNullOrEmpty(name)) return;
             if (name.Length > 0)

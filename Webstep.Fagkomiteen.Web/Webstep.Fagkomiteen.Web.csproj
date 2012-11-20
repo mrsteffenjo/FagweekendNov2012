@@ -150,14 +150,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\MailController.cs" />
     <Compile Include="Controllers\Api\PersonController.cs" />
-    <Compile Include="Controllers\Api\PersonsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\JsonpMediaTypeFormatter.cs" />
+    <Compile Include="Models\MailSender.cs" />
     <Compile Include="Models\WebstepContext.cs" />
     <Compile Include="Models\XHttpMethodOverrideDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
