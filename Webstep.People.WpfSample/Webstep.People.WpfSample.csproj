@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Model\Events\CommunicationFailedEvent.cs" />
     <Compile Include="Model\Events\PersonUpdatedEvent.cs" />
     <Compile Include="Model\Events\PersonDeletedEvent.cs" />

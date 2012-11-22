@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fagweekend2012.Service", "Fagweekend2012.Service\Fagweekend2012.Service.csproj", "{ADA7E5B7-1831-47C9-95BE-F637BC071188}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webstep.PeopleScraper", "Webstep.PeopleScraper\Webstep.PeopleScraper.csproj", "{5085A2F9-C932-4907-AD71-28EED61AC02E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webstep.People.Domain", "Webstep.People.Domain\Webstep.People.Domain.csproj", "{228A809B-321C-4802-BF71-D527F3A2BEC7}"
@@ -23,16 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{ADA7E5B7-1831-47C9-95BE-F637BC071188}.Release|x86.ActiveCfg = Release|Any CPU
 		{5085A2F9-C932-4907-AD71-28EED61AC02E}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{5085A2F9-C932-4907-AD71-28EED61AC02E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{5085A2F9-C932-4907-AD71-28EED61AC02E}.Debug|Mixed Platforms.Build.0 = Debug|x86

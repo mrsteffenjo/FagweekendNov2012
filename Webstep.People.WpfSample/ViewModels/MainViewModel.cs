@@ -18,7 +18,7 @@ using Webstep.People.WpfSample.Views;
 
 namespace Webstep.People.WpfSample.ViewModels
 {
-    public class MainViewModel: ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         readonly PersonService _personService = new PersonService();
 
@@ -26,11 +26,7 @@ namespace Webstep.People.WpfSample.ViewModels
         {
             // Wire up commands / Button clicks
             AddPersonCommand = new RelayCommand(AddPerson);
-            LoadPeopleCommand = new RelayCommand(() =>
-                {
-                    People.Clear();
-                    _personService.GetPeople();
-                });
+            LoadPeopleCommand = new RelayCommand(GetPeople);
             DeletePersonCommand = new RelayCommand<Person>(DeletePerson);
             UpdatePersonCommand = new RelayCommand<Person>(UpdatePerson, person =>
                 {
@@ -38,7 +34,11 @@ namespace Webstep.People.WpfSample.ViewModels
                 });
 
             // Events handlers
-            Messenger.Default.Register<CommunicationFailedEvent>(this, (e) => MessageBox.Show(e.Message));
+            Messenger.Default.Register<CommunicationFailedEvent>(this, (e) =>
+            {
+                MessageBox.Show(e.Message);
+                IsLoadingPeople = false;
+            });
             Messenger.Default.Register<PersonUpdatedEvent>(this, (e) => MessageBox.Show("Person was updated on server"));
             Messenger.Default.Register<PersonCreatedEvent>(this, (e) => _people.Add(e.Person));
             Messenger.Default.Register<PersonDeletedEvent>(this, (e) =>
@@ -50,19 +50,37 @@ namespace Webstep.People.WpfSample.ViewModels
                     }
                 });
             Messenger.Default.Register<PeopleRetrievedEvent>(this, (e) =>
-            {
-                foreach (var person in e.People)
                 {
-                    People.Add(person);
-                }
-            });
+
+                    foreach (var person in e.People)
+                    {
+                        People.Add(person);
+                    }
+                    IsLoadingPeople = false;
+                });
         }
+
+       
 
         public ICommand LoadPeopleCommand { get; set; }
         public ICommand AddPersonCommand { get; set; }
         public RelayCommand<Person> DeletePersonCommand { get; set; }
         public RelayCommand<Person> UpdatePersonCommand { get; set; }
 
+        private bool _isLoadingPeople;
+        public bool IsLoadingPeople
+        {
+            get
+            {
+                return (_isLoadingPeople);
+            }
+            set
+            {
+                if (_isLoadingPeople == value) return;
+                _isLoadingPeople = value;
+                RaisePropertyChanged(() => IsLoadingPeople);
+            }
+        }
 
         private ObservableCollection<Person> _people = new ObservableCollection<Person>();
         public ObservableCollection<Person> People
@@ -79,7 +97,6 @@ namespace Webstep.People.WpfSample.ViewModels
             }
         }
 
-
         private Person _selectedPerson;
         public Person SelectedPerson
         {
@@ -94,7 +111,13 @@ namespace Webstep.People.WpfSample.ViewModels
                 RaisePropertyChanged(() => SelectedPerson);
             }
         }
-        
+
+        private void GetPeople()
+        {
+            IsLoadingPeople = true;
+            People.Clear();
+            _personService.GetPeople();
+        }
 
         private void DeletePerson(Person person)
         {
@@ -102,12 +125,12 @@ namespace Webstep.People.WpfSample.ViewModels
             {
                 _personService.Delete(person);
             }
-           
+
         }
 
         private void AddPerson()
         {
-            
+
             var createWindow = new CreateView();
 
             if (createWindow.ShowDialog() == true)
@@ -115,22 +138,22 @@ namespace Webstep.People.WpfSample.ViewModels
                 var viewModel = (CreatePersonViewModel)createWindow.DataContext;
                 _personService.AddPerson(viewModel.Person);
             }
-           
+
         }
 
         private void UpdatePerson(Person person)
         {
             var updateWindow = new UpdateView();
             updateWindow.DataContext = new UpdatePersonViewModel(person);
-          
+
             if (updateWindow.ShowDialog() == true)
             {
-               
+
                 _personService.UpdatePerson(person);
             }
 
         }
 
-        
+
     }
 }

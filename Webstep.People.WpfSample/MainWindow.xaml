@@ -42,5 +42,10 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+        <Grid Grid.RowSpan="2" Visibility="{Binding IsLoadingPeople, Converter={StaticResource boolToVisibilityConverter}}">
+            <Border Opacity="0.8" Background="DarkBlue" ></Border>
+            <TextBlock Text="Loading people...Please wait" FontSize="32" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
+        </Grid>
     </Grid>
 </Window>

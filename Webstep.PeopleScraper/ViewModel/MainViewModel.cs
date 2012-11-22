@@ -46,6 +46,7 @@ namespace Webstep.PeopleScraper.ViewModel
                                                                                if (_infoCounter == People.Count)
                                                                                {
                                                                                    _isFinishedScraping = true;
+                                                                                   IsLoadingPeople = false;
                                                                                }
                                                                            });
         }
@@ -69,8 +70,24 @@ namespace Webstep.PeopleScraper.ViewModel
             }
         }
 
+        private bool _isLoadingPeople;
+        public bool IsLoadingPeople
+        {
+            get
+            {
+                return (_isLoadingPeople);
+            }
+            set
+            {
+                if (_isLoadingPeople == value) return;
+                _isLoadingPeople = value;
+                RaisePropertyChanged(() => IsLoadingPeople);
+            }
+        }
+
         private void LoadPeople()
         {
+            IsLoadingPeople = true;
             _personService.DownloadPeople(Url);
         }
 

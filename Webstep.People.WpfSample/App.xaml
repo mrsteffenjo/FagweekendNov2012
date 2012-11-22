@@ -1,8 +1,9 @@
 ﻿<Application x:Class="Webstep.People.WpfSample.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Webstep.People.WpfSample.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
     </Application.Resources>
 </Application>
